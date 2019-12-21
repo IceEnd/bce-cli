@@ -1,0 +1,42 @@
+{
+  "name": "bce-cli",
+  "version": "0.0.1",
+  "description": "bce-cli",
+  "main": "cli.ts",
+  "bin": {
+    "bce": "bin/cli.js"
+  },
+  "scripts": {
+    "prebuild": "rm -rf bin",
+    "build": "tsc",
+    "lint": "tslint --project '.'"
+  },
+  "repository": "https://github.com/IceEnd/bce-reol.git",
+  "author": "IceEnd <min@coolecho.net>",
+  "license": "MIT",
+  "dependencies": {
+    "bce-sdk-js": "^0.2.9",
+    "colors": "^1.4.0",
+    "commander": "^4.0.1",
+    "inquirer": "^7.0.0",
+    "klaw": "^3.0.0",
+    "md5": "^2.2.1",
+    "ora": "^4.0.3",
+    "p-limit": "^2.2.1"
+  },
+  "devDependencies": {
+    "@types/colors": "^1.2.1",
+    "@types/commander": "^2.12.2",
+    "@types/inquirer": "^6.5.0",
+    "@types/klaw": "^3.0.0",
+    "@types/md5": "^2.1.33",
+    "@types/node": "^12.12.17",
+    "pre-commit": "^1.2.2",
+    "ts-node": "^8.5.4",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.3"
+  },
+  "pre-commit": [
+    "lint"
+  ]
+}

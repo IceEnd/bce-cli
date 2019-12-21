@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "bin",
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "removeComments": true,
+    "sourceMap": false,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "./lib/*.ts",
+    "cli.ts",
+    "package.json"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
