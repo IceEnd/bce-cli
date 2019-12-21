@@ -23,7 +23,7 @@ interface IPutOptions {
   prefix: string;
   override: boolean;
   objectKey?: string;
-  limit?: number;
+  limit?: string;
   flat?: boolean;
   ext?: string;
   cache: string;
@@ -231,7 +231,7 @@ export async function putFolder(dir: string, options: IPutOptions) {
   const client = new Client(target.config);
   const files = await walkFiles(folderPath, options);
 
-  const limit = pLimit(options.limit || 10);
+  const limit = pLimit(parseInt(options.limit || '10', 10));
 
   const queue = [];
 

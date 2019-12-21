@@ -1,6 +1,6 @@
 {
   "name": "bce-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "bce-cli",
   "main": "cli.ts",
   "bin": {
@@ -9,6 +9,7 @@
   "scripts": {
     "prebuild": "rm -rf bin",
     "build": "tsc",
+    "prepublish": "npm run build",
     "lint": "tslint --project '.'"
   },
   "repository": "https://github.com/IceEnd/bce-reol.git",
