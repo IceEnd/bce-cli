@@ -40,7 +40,7 @@ program
   .option('-p --prefix <prefix>', 'prefix', '')
   .option('-k --objectKey <objectKey>', 'object key', '')
   .option('-c --cache <cache>', 'cache control', '')
-  .option('--md5', 'use md5 name file')
+  .option('--md5', 'use md5 name file', true)
   .option('--no-md5', 'do not use md5 name file')
   .option('-o --override', 'override', false)
   .action(putFile);
