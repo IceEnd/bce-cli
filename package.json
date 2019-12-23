@@ -12,7 +12,7 @@
     "prepublish": "npm run build",
     "lint": "tslint --project '.'"
   },
-  "repository": "https://github.com/IceEnd/bce-reol.git",
+  "repository": "https://github.com/IceEnd/bce-cli.git",
   "author": "IceEnd <min@coolecho.net>",
   "license": "MIT",
   "dependencies": {
