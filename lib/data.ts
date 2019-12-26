@@ -146,7 +146,7 @@ export function list(): void {
   for (const item of config) {
     res.push({
       name: item.name,
-      bucket: item.name,
+      bucket: item.bucket,
       host: item.host,
       prefix: item.prefix,
       default: item.name === current,
