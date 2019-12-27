@@ -23,7 +23,8 @@
     "klaw": "^3.0.0",
     "md5": "^2.2.1",
     "ora": "^4.0.3",
-    "p-limit": "^2.2.1"
+    "p-limit": "^2.2.1",
+    "table": "^5.4.6"
   },
   "devDependencies": {
     "@types/colors": "^1.2.1",
@@ -32,6 +33,7 @@
     "@types/klaw": "^3.0.0",
     "@types/md5": "^2.1.33",
     "@types/node": "^12.12.17",
+    "@types/table": "^4.0.7",
     "pre-commit": "^1.2.2",
     "ts-node": "^8.5.4",
     "tslint": "^5.20.1",

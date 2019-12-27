@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import program from 'commander';
 import { putFile, putFolder } from './lib/bos';
-import { add, list, remove, use} from './lib/data';
+import { add, detail, edit, list, remove, use} from './lib/data';
 import PKG from './package.json';
 
 program
@@ -15,7 +15,19 @@ program
 program
   .command('show <name>')
   .description('show detail of the bucket')
-  .action(list);
+  .action(detail);
+
+program
+  .command('config <name>')
+  .description('set bucket info')
+  .usage('[options] <name ...>')
+  .option('-h --host <host>', 'bucket host', '')
+  .option('-p --prefix <prefix>', 'object key prefix', '')
+  .option('-b --bucket <bucket>', 'bucket', '')
+  .option('-e --endpoint <endpoint>', 'endpoint', '')
+  .option('-a --ak <ak>', '', '')
+  .option('-s --sk <sk>', '', '')
+  .action(edit);
 
 program
   .command('add')

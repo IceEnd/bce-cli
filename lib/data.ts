@@ -2,6 +2,9 @@ import colors from 'colors/safe';
 import fs from 'fs';
 import inquirer from 'inquirer';
 import path from 'path';
+import { table } from 'table';
+
+const log = console.log;
 
 const BCERC: string = path.join(process.env.HOME ? process.env.HOME : '../', '.bcereolrc');
 
@@ -15,7 +18,7 @@ function setBCEInfo(data: any): void {
     fs.writeFileSync(BCERC, JSON.stringify(data));
   } catch (ex) {
     process.exit(1);
-    console.log(ex);
+    log(ex);
   }
 }
 
@@ -115,7 +118,7 @@ export async function add(): Promise<void> {
     }
   }
   if (hasRepeat) {
-    console.log(colors.red('duplicate bce names.'));
+    log(colors.red('duplicate bce names.'));
     return;
   }
   config.push({
@@ -133,8 +136,8 @@ export async function add(): Promise<void> {
   });
   bceInfo.config = config;
   setBCEInfo(bceInfo);
-  console.log('');
-  console.log(colors.green(`add bce config [${answers.name}] success`));
+  log('');
+  log(colors.green(`add bce config [${answers.name}] success`));
   return;
 }
 
@@ -142,19 +145,40 @@ export function list(): void {
   const bceInfo = getBCEInfo();
   const current: string = bceInfo.current || '';
   const config: IConfig[] = bceInfo.config || [];
+  const { yellow, green } = colors;
   const res = [];
+  const header = ['Name', 'Bucket', 'Host', 'Prefix', 'Default'].map((title) => {
+    return green(title);
+  });
+  res.push(header);
+  const normal = (str: string): string => str;
   for (const item of config) {
-    res.push({
-      name: item.name,
-      bucket: item.bucket,
-      host: item.host,
-      prefix: item.prefix,
-      default: item.name === current,
-    });
+    const { name, bucket, host, prefix } = item;
+    const isDefault = item.name === current;
+    let wrapper = normal;
+    let status = ' ';
+    if (isDefault) {
+      wrapper = yellow;
+      status = '*';
+    }
+    res.push([
+      wrapper(name),
+      wrapper(bucket),
+      wrapper(host),
+      wrapper(prefix),
+      wrapper(status),
+    ]);
   }
-  console.log();
-  console.table(res);
-  console.log();
+  log();
+  log(table(res, {
+    columns: {
+      4: {
+        width: 10,
+        alignment: 'center',
+      },
+    },
+  }));
+  log('bce use <name> to change default bucket.');
   return;
 }
 
@@ -168,15 +192,15 @@ export function use(name: string): void {
       break;
     }
   }
-  console.log();
+  log();
   if (hasFound) {
     bceInfo.current = name;
     setBCEInfo(bceInfo);
-    console.log(colors.green(`Bucket has been set to ${name}`));
+    log(colors.green(`Bucket has been set to ${name}`));
   } else {
-    console.log(colors.red(`Cannot found ${name}`));
+    log(colors.red(`Cannot found ${name}`));
   }
-  console.log();
+  log();
   return;
 }
 
@@ -189,7 +213,43 @@ export function remove(name: string): void {
   }
   bceInfo.config = newConig;
   setBCEInfo(bceInfo);
-  console.log();
-  console.log(colors.green(`Remove ${name} success`));
-  console.log();
+  log();
+  log(colors.green(`Remove ${name} success`));
+  log();
+  return;
+}
+
+export function detail(name: string): void {
+  const bceInfo = getBCEInfo();
+  const config: IConfig[] = bceInfo.config || [];
+  let hasFound = -1;
+  for (const [i, item] of config.entries()) {
+    if (item.name === name) {
+      hasFound = i;
+      break;
+    }
+  }
+  if (hasFound >= 0) {
+    const target = config[hasFound];
+    const data = [
+      ['Name', target.name],
+      ['Bucket', target.bucket],
+      ['Host', target.host],
+      ['Prefix', target.prefix],
+      ['Endpoint', target.config.endpoint],
+      ['AK', target.config.credentials.ak],
+      ['SK', target.config.credentials.sk],
+      ['Default', target.name === bceInfo.current ? 'true' : 'false'],
+    ];
+    log();
+    log(`${name} datail:`);
+    log(table(data));
+  } else {
+    log(colors.red(`Cannot found ${name}`));
+  }
+  return;
+}
+
+export function edit() {
+  return;
 }
